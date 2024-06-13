@@ -45,20 +45,48 @@ const std::string ShaderManager::defaultShaderVertex =
     "  gl_Position = vViewModel * vPosition;\n"
     "}\n";
 
+// const std::string ShaderManager::defaultShaderFragment =
+//     "#ifdef GL_FRAGMENT_PRECISION_HIGH\n"
+//     "#define HIGHP highp\n"
+//     "#else\n"
+//     "#define HIGHP mediump\n"
+//     "precision mediump float;\n"
+//     "#endif\n"
+//     "\n"
+//     "uniform lowp sampler2D texture;\n"
+//     "varying HIGHP vec2 coords;\n"
+//     "void main() {\n"
+//     "  vec4 tex = texture2D(texture, coords);"
+//     "  gl_FragColor = vec4(tex.rgb, 1.0);\n"
+//     "}\n";
+
+/*
+    着色器部分修改，修改的区别与解释
+    GL_ES 定义：
+
+    原代码中没有 #ifdef GL_ES 的判断，改为根据是否是GL_ES环境进行判断。
+    #ifdef GL_ES 是用来确保只在OpenGL ES环境下定义精度。
+    精度声明：
+
+    原代码中使用了 #ifdef GL_FRAGMENT_PRECISION_HIGH 来判断是否使用高精度或中精度的浮点数，并定义了 HIGHP。
+    修改后的代码直接声明了中等精度（precision mediump float;），简化了代码逻辑。
+    变量定义：
+
+    原代码中 uniform lowp sampler2D texture; 和 varying HIGHP vec2 coords; 使用了 lowp 和 HIGHP。
+    修改后的代码统一使用 uniform sampler2D texture; 和 varying vec2 coords;，并且在片段着色器中明确声明了精度。
+*/
 const std::string ShaderManager::defaultShaderFragment =
-    "#ifdef GL_FRAGMENT_PRECISION_HIGH\n"
-    "#define HIGHP highp\n"
-    "#else\n"
-    "#define HIGHP mediump\n"
+    "#ifdef GL_ES\n"
     "precision mediump float;\n"
     "#endif\n"
     "\n"
-    "uniform lowp sampler2D texture;\n"
-    "varying HIGHP vec2 coords;\n"
+    "uniform sampler2D texture;\n"
+    "varying vec2 coords;\n"
     "void main() {\n"
-    "  vec4 tex = texture2D(texture, coords);"
+    "  vec4 tex = texture2D(texture, coords);\n"
     "  gl_FragColor = vec4(tex.rgb, 1.0);\n"
     "}\n";
+
 
 const std::string ShaderManager::crtShaderFragment =
     "#ifdef GL_FRAGMENT_PRECISION_HIGH\n"
