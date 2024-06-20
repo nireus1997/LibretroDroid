@@ -25,6 +25,7 @@ namespace libretrodroid {
 
 Audio::Audio(int32_t sampleRate, double refreshRate, bool preferLowLatencyAudio) {
     LOGI("Audio initialization has been called with input sample rate %d", sampleRate);
+    LOGI("Audio initialization has been called with refresh rate %f", refreshRate);
 
     contentRefreshRate = refreshRate;
     inputSampleRate = sampleRate;
@@ -53,6 +54,7 @@ bool Audio::initializeStream() {
     oboe::Result result = builder.openManagedStream(stream);
     if (result == oboe::Result::OK) {
         baseConversionFactor = (double) inputSampleRate / stream->getSampleRate();
+        LOGI("oboe::Result::OK baseConversionFactor %f", baseConversionFactor);
         fifoBuffer = std::make_unique<oboe::FifoBuffer>(2, audioBufferSize);
         temporaryAudioBuffer = std::unique_ptr<int16_t[]>(new int16_t[audioBufferSize]);
         latencyTuner = std::make_unique<oboe::LatencyTuner>(*stream);
