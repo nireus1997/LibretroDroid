@@ -564,10 +564,18 @@ void LibretroDroid::afterGameLoad() {
     struct retro_system_av_info system_av_info {};
     core->retro_get_system_av_info(&system_av_info);
 
+    LOGD("afterGameLoad");
+    LOGD("Base Width: %d\n", av_info.geometry.base_width);
+    LOGD("Base Height: %d\n", av_info.geometry.base_height);
+    LOGD("Aspect Ratio: %f\n", av_info.geometry.aspect_ratio);
+    LOGD("FPS: %f\n", av_info.timing.fps);
+    LOGD("Sample Rate: %f\n", av_info.timing.sample_rate);
+
     fpsSync = std::make_unique<FPSSync>(system_av_info.timing.fps, screenRefreshRate);
 
     double inputSampleRate = system_av_info.timing.sample_rate * fpsSync->getTimeStretchFactor();
 
+    LOGD("inputSampleRate: %f\n", inputSampleRate);
     audio = std::make_unique<Audio>(
         (int32_t) std::lround(inputSampleRate),
         system_av_info.timing.fps,
