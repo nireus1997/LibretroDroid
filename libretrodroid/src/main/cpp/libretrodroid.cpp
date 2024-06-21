@@ -565,11 +565,11 @@ void LibretroDroid::afterGameLoad() {
     core->retro_get_system_av_info(&system_av_info);
 
     LOGI("afterGameLoad");
-    LOGI("Base Width: %d\n", av_info.geometry.base_width);
-    LOGI("Base Height: %d\n", av_info.geometry.base_height);
-    LOGI("Aspect Ratio: %f\n", av_info.geometry.aspect_ratio);
-    LOGI("FPS: %f\n", av_info.timing.fps);
-    LOGI("Sample Rate: %f\n", av_info.timing.sample_rate);
+    LOGI("Base Width: %d\n", system_av_info.geometry.base_width);
+    LOGI("Base Height: %d\n", system_av_info.geometry.base_height);
+    LOGI("Aspect Ratio: %f\n", system_av_info.geometry.aspect_ratio);
+    LOGI("FPS: %f\n", system_av_info.timing.fps);
+    LOGI("Sample Rate: %f\n", system_av_info.timing.sample_rate);
 
     fpsSync = std::make_unique<FPSSync>(system_av_info.timing.fps, screenRefreshRate);
 
