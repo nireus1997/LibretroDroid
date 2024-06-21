@@ -99,7 +99,7 @@ bool Environment::environment_handle_set_variables(const struct retro_variable* 
         }
 
         variables[key] = currentVariable;
-        LOGD("Assigning variable %s: %s", variable.key.c_str(), variable.value.c_str());
+        // LOGD("Assigning variable %s: %s", variables.key.c_str(), variables.value.c_str());
 
         count++;
     }
